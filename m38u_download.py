@@ -1,56 +1,11 @@
-import os
 import re
-import shutil
-import datetime
-import queue
+import os
 import time
-
+import queue
+import shutil
 import requests
+import datetime
 import threading
-from bs4 import BeautifulSoup
-
-
-class PronSpider:
-    def __init__(self, index_url):
-        self.index_url = index_url
-        self.video_list = list()
-
-    def request_bs4(self, url):
-        proxies = {
-            "http": "http://127.0.0.1:41091",
-            "https": "http://127.0.0.1:41091",
-        }
-        response = requests.get(url, proxies=proxies)
-        if response.ok:
-            return BeautifulSoup(response.content, "lxml")
-        else:
-            raise Exception("Request [{}] fail.".format(url))
-
-    def find_video_info(self, url):
-        soup = self.request_bs4(url)
-        videos = soup.find_all(attrs={'class': 'thumb-overlay'})
-        for child in videos:
-            info = dict()
-            matcher = re.search('playvthumb_(\d+)', child.attrs['id'])
-            info["id"] = matcher.groups()[0]
-            url = child.parent.attrs['href']
-            for chd in child.children:
-                if isinstance(chd, str):
-                    continue
-                if chd.attrs.get("class") and isinstance(chd.attrs.get("class"), list):
-                    if chd.attrs.get("class")[0] == 'hd-text-icon':
-                        info["hd"] = chd.text
-                    if chd.attrs.get("class")[0] == "duration":
-                        info["duration"] = chd.text
-            # self.get_video_detail(url)
-            self.video_list.append(info)
-            print(url, info)
-
-    def get_video_detail(self, url):
-        soup = self.request_bs4(url)
-        div_info = soup.find(attrs={"class": "video-container"})
-        matcher = re.search(r"strencode2\(\"(\S+)\"\)", str(div_info.next_element.next_element))
-        print(div_info)
 
 
 class M3u8Download:
@@ -63,7 +18,7 @@ class M3u8Download:
         self.ts_base_url = ts_base_url
         self.m3u8_file = m3u8_file
         self.download_path = os.path.join(self.base_dir, "var")
-        self.template_dir = os.path.join(self.base_dir, "var", self.now_str)
+        self.template_dir = os.path.join(self.download_path, "template", self.now_str)
         self.download_queue = queue.Queue()
         self.create_download_thread(self.download_queue)
 
@@ -82,6 +37,7 @@ class M3u8Download:
 
     def set_download_path(self, path):
         self.download_path = path
+        self.template_dir = os.path.join(self.download_path, "template", self.now_str)
 
     @property
     def now_str(self):
@@ -91,7 +47,7 @@ class M3u8Download:
         m3u8_path = self.m3u8_file
         if re.search("http", self.m3u8_file):
             if not os.path.exists(self.template_dir):
-                os.mkdir(self.template_dir)
+                os.makedirs(self.template_dir)
             m3u8_path = os.path.join(self.template_dir, self.now_str + ".m3u8")
             self.download_file(m3u8_path, self.m3u8_file, text=True)
 
@@ -152,19 +108,8 @@ class M3u8Download:
                     print("Download [{}] Success. thread:{}".format(file_path, threading.current_thread().name))
                     return
             except Exception as ex:
-                print("ERROR count:{0}: Request {1} fail. thread:{2}".format(10-retry, url, threading.current_thread().name))
+                print("ERROR count:{0}: Request {1} fail. thread:{2}".format(10 - retry, url,
+                                                                             threading.current_thread().name))
                 retry -= 1
                 time.sleep(5)
                 continue
-
-
-if __name__ == '__main__':
-    for page in range(1, 2):
-        # pron = PronSpider(index_url="http://www.91porn.com/v.php?category=rf&viewtype=basic&page={}".format(page))
-        pron = PronSpider(index_url="http://www.91porn.com/v.php?category=hd&viewtype=basic")
-        pron.find_video_info(pron.index_url)
-        for video in pron.video_list:
-            vide_id = video["id"]
-            spider = M3u8Download(m3u8_file="https://fdc.91p49.com/m3u8/{0}/{0}.m3u8".format(vide_id),
-                                  ts_base_url="https://cdn.91p07.com/m3u8/{}/".format(vide_id))
-            spider.execute("{}.mp4".format(vide_id))
