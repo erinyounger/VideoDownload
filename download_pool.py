@@ -1,5 +1,3 @@
-import re
-import os
 import time
 import queue
 import threading
