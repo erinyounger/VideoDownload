@@ -2,19 +2,23 @@ import re
 import os
 import shutil
 import datetime
+import subprocess
 from download_pool import DownloadPool
 from http_helper import download_file
 
 
 class M3u8Download:
-    def __init__(self, m3u8_file, ts_base_url, work_dir=None):
+    def __init__(self, info, work_dir=None):
         if not work_dir:
             self.base_dir = os.path.dirname(os.path.abspath(__file__))
         else:
             self.base_dir = work_dir
         self.ts_pool = list()
-        self.ts_base_url = ts_base_url
-        self.m3u8_file = m3u8_file
+        self.ts_base_url = info.get("ts_base_url")
+        self.m3u8_file = info.get("m3u8_url")
+        self.img_url = info.get("img_url")
+        self.img_path = None
+        self.video_id = info.get("id")
         self.download_path = os.path.join(self.base_dir, "var")
         self.template_dir = os.path.join(self.download_path, "template", self.now_str)
 
@@ -33,6 +37,10 @@ class M3u8Download:
                 os.makedirs(self.template_dir)
             m3u8_path = os.path.join(self.template_dir, self.now_str + ".m3u8")
             download_file(m3u8_path, self.m3u8_file, text=True)
+
+            if self.img_url:
+                self.img_path = os.path.join(self.template_dir, self.video_id+".jpg")
+                download_file(self.img_path, self.img_url)
 
         with open(m3u8_path, 'r') as f:
             line = "1"
@@ -65,11 +73,22 @@ class M3u8Download:
                 with open(ts_path, "rb") as ts_f:
                     content = ts_f.read()
                 tg_f.write(content)
+        out_put_path = os.path.join(self.download_path, "img_"+target_name)
+        self.atache_img(target_path, self.img_path, out_put_path)
+        os.remove(os.path.join(self.download_path, target_name))
+        os.rename(out_put_path, target_path)
         print("Combined TS file TO [{}]".format(target_path))
+
+    def atache_img(self, mp4_path, img_path, out_path):
+        cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
+            mp4_path, img_path, out_path
+        )
+        sub = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        sub.wait()
 
     def execute(self, target_name):
         if self.is_downloaded(target_name):
-            print("Worming: already downlod: {}".format(target_name))
+            print("Worming: already download: {}".format(target_name))
             return
         self.parse_m3u8()
         self.download_ts_file()

@@ -40,13 +40,11 @@ def download_91pron(category="hot", month=None, page_num=None):
         pron = Pron91Spider(url)
         pron.find_video_info(pron.index_url)
         for video in pron.video_list:
-            vide_id = video["id"]
-            spider = M3u8Download(m3u8_file="https://fdc.91p49.com/m3u8/{0}/{0}.m3u8".format(vide_id),
-                                  ts_base_url="https://cdn.91p07.com/m3u8/{}/".format(vide_id))
+            spider = M3u8Download(info=video)
             spider.set_download_path(DOWNLOAD_DIR)
-            spider.execute("{}.mp4".format(vide_id))
+            spider.execute("{}.mp4".format(video["id"]))
 
 
 if __name__ == '__main__':
     # download video from 91pron
-    download_91pron(category="top", month="-1", page_num=20)
+    download_91pron(category="index")
