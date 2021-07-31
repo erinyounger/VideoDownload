@@ -47,4 +47,4 @@ def download_91pron(category="hot", month=None, page_num=None):
 
 if __name__ == '__main__':
     # download video from 91pron
-    download_91pron(category="index")
+    download_91pron(category="index", page_num=10)

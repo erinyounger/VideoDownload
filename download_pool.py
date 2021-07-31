@@ -2,7 +2,7 @@ import time
 import queue
 import threading
 
-MAX_THREAD_NUM = 20
+MAX_THREAD_NUM = 10
 
 
 class DownloadPool:

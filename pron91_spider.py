@@ -8,7 +8,7 @@ class Pron91Spider:
         self.index_url = index_url
         self.video_list = list()
         self.m3u8_base_url = "https://fdc.91p49.com/m3u8/{0}/{0}.m3u8"
-        self.ts_base_url = "https://cdn.91p07.com/m3u8/{0}/"
+        self.ts_base_url = "https://ccn.killcovid2021.com//m3u8/{0}/"
 
     def request_bs4(self, url):
         proxies = {
