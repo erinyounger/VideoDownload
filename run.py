@@ -1,9 +1,9 @@
 from urllib.parse import urlencode
-
+import time
 from m38u_download import M3u8Download
 from pron91_spider import Pron91Spider
 
-DOWNLOAD_DIR = r"D:\04_PyCode\Download"
+DOWNLOAD_DIR = r"D:\04_PyCode\Download\{}".format(time.strftime("%Y%m"))
 
 
 def download_91pron(category="hot", month=None, page_num=None):
@@ -47,4 +47,4 @@ def download_91pron(category="hot", month=None, page_num=None):
 
 if __name__ == '__main__':
     # download video from 91pron
-    download_91pron(category="index", page_num=10)
+    download_91pron(category="hd", page_num=5)
