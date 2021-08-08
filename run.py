@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 import time
-from m38u_download import M3u8Download
+from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
 
 DOWNLOAD_DIR = r"D:\04_PyCode\Download\{}".format(time.strftime("%Y%m"))
