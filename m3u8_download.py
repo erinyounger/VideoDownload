@@ -6,6 +6,7 @@ import datetime
 import subprocess
 from download_pool import DownloadPool
 from http_helper import download_file
+from log import logger
 
 
 class M3u8Download:
@@ -51,7 +52,7 @@ class M3u8Download:
                 if not ts_matcher:
                     continue
                 self.ts_pool.append(ts_matcher.groups()[0])
-        print("TS_POOL: {}".format(self.ts_pool))
+        logger.info("TS_POOL: {}".format(self.ts_pool))
 
     def download_ts_file(self):
         task_list = list()
@@ -68,7 +69,7 @@ class M3u8Download:
         for root, ds, fs in os.walk(base_dir):
             for f in fs:
                 if re.match(target_name, f):
-                    print("Worming: already download: {}".format(target_name))
+                    logger.info("Worming: already download: {}".format(target_name))
                     return True
         self.set_download_path(download_dir)
         return False
@@ -85,7 +86,7 @@ class M3u8Download:
         self.atache_img(target_path, self.img_path, out_put_path)
         os.remove(os.path.join(self.download_path, target_name))
         os.rename(out_put_path, target_path)
-        print("Combined TS file TO [{}]".format(target_path))
+        logger.info("Combined TS file TO [{}]".format(target_path))
 
     def atache_img(self, mp4_path, img_path, out_path):
         cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(

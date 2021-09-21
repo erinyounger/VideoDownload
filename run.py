@@ -3,6 +3,8 @@ from urllib.parse import urlencode
 from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
 
+from log import logger
+
 DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
 
 
@@ -38,7 +40,7 @@ def download_91pron(category="hot", month=None, page_num=None):
 
     for url in download_urls:
         pron = Pron91Spider(url, DOWNLOAD_BASE_DIR)
-        print("URL:", pron.index_url)
+        logger.info(f"URL: {pron.index_url}")
         pron.find_video_info(pron.index_url)
         for video in pron.video_list:
             _vide_name = "{}.mp4".format(video["id"])

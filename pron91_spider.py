@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 import execjs
 from selenium import webdriver
 
+from log import logger
+
 
 proxies = {
     "http": "http://127.0.0.1:41091",
@@ -43,7 +45,7 @@ class Pron91Spider:
                 api_js = f.read()
             node = execjs.get()
             ctx = node.compile(api_js)
-            print(ctx.eval(js_code_str.replace(";", "")))
+            logger.info(ctx.eval(js_code_str.replace(";", "")))
 
     def is_machine(self, url):
         soup = self.request_bs4(url)
@@ -94,11 +96,11 @@ class Pron91Spider:
             info["m3u8_url"] = self.m3u8_base_url.format(info["id"])
             info["ts_base_url"] = self.ts_base_url.format(info["id"])
             self.video_list.append(info)
-            print(url, info)
+            logger.info(url, info)
 
     def get_video_detail(self, url):
         # TODO 详细播放地址
         soup = self.request_bs4(url)
         div_info = soup.find(attrs={"class": "video-container"})
         matcher = re.search(r"strencode2\(\"(\S+)\"\)", str(div_info.next_element.next_element))
-        print(div_info)
+        logger.info(div_info)
