@@ -1,9 +1,9 @@
+import os
 from urllib.parse import urlencode
-import time
 from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
 
-DOWNLOAD_DIR = r"D:\04_PyCode\Download\{}".format(time.strftime("%Y%m"))
+DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
 
 
 def download_91pron(category="hot", month=None, page_num=None):
@@ -37,14 +37,20 @@ def download_91pron(category="hot", month=None, page_num=None):
         download_urls.append(url)
 
     for url in download_urls:
-        pron = Pron91Spider(url)
+        pron = Pron91Spider(url, DOWNLOAD_BASE_DIR)
+        print("URL:", pron.index_url)
         pron.find_video_info(pron.index_url)
         for video in pron.video_list:
+            _vide_name = "{}.mp4".format(video["id"])
             spider = M3u8Download(info=video)
-            spider.set_download_path(DOWNLOAD_DIR)
-            spider.execute("{}.mp4".format(video["id"]))
+            if spider.is_downloaded(DOWNLOAD_BASE_DIR, _vide_name):
+                continue
+            spider.execute(_vide_name)
 
 
 if __name__ == '__main__':
     # download video from 91pron
-    download_91pron(category="hd", page_num=5)
+    download_91pron(category="index")
+    download_91pron(category="ori", page_num=10)
+    download_91pron(category="rf", page_num=10)
+    os.system("shutdown -s -t 10")

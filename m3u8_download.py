@@ -1,5 +1,6 @@
 import re
 import os
+import time
 import shutil
 import datetime
 import subprocess
@@ -62,8 +63,15 @@ class M3u8Download:
         d_pool.start(task_list)
         d_pool.join()
 
-    def is_downloaded(self, target_name):
-        return os.path.exists(os.path.join(self.download_path, target_name))
+    def is_downloaded(self, base_dir, target_name):
+        download_dir = os.path.join(base_dir, time.strftime("%Y%m%d"))
+        for root, ds, fs in os.walk(base_dir):
+            for f in fs:
+                if re.match(target_name, f):
+                    print("Worming: already download: {}".format(target_name))
+                    return True
+        self.set_download_path(download_dir)
+        return False
 
     def combine_ts_file(self, target_name):
         target_path = os.path.join(self.download_path, target_name)
@@ -87,9 +95,6 @@ class M3u8Download:
         sub.wait()
 
     def execute(self, target_name):
-        if self.is_downloaded(target_name):
-            print("Worming: already download: {}".format(target_name))
-            return
         self.parse_m3u8()
         self.download_ts_file()
         self.combine_ts_file(target_name)
