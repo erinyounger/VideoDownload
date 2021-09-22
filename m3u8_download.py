@@ -83,12 +83,12 @@ class M3u8Download:
                     content = ts_f.read()
                 tg_f.write(content)
         out_put_path = os.path.join(self.download_path, "img_"+target_name)
-        self.atache_img(target_path, self.img_path, out_put_path)
+        self.attach_img(target_path, self.img_path, out_put_path)
         os.remove(os.path.join(self.download_path, target_name))
         os.rename(out_put_path, target_path)
         logger.info("Combined TS file TO [{}]".format(target_path))
 
-    def atache_img(self, mp4_path, img_path, out_path):
+    def attach_img(self, mp4_path, img_path, out_path):
         cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
             mp4_path, img_path, out_path
         )

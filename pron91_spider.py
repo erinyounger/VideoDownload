@@ -9,7 +9,6 @@ from selenium import webdriver
 
 from log import logger
 
-
 proxies = {
     "http": "http://127.0.0.1:41091",
     "https": "http://127.0.0.1:41091",
