@@ -53,6 +53,6 @@ def download_91pron(category="hot", month=None, page_num=None):
 if __name__ == '__main__':
     # download video from 91pron
     download_91pron(category="index")
-    download_91pron(category="ori", page_num=10)
-    download_91pron(category="rf", page_num=10)
+    download_91pron(category="ori", page_num=3)
+    download_91pron(category="rf", page_num=3)
     os.system("shutdown -s -t 10")

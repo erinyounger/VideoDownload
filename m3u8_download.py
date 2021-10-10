@@ -76,6 +76,8 @@ class M3u8Download:
 
     def combine_ts_file(self, target_name):
         target_path = os.path.join(self.download_path, target_name)
+        if not self.ts_pool:
+            return
         with open(target_path, "ab") as tg_f:
             for ts in self.ts_pool:
                 ts_path = os.path.join(self.template_dir, ts)
@@ -92,6 +94,7 @@ class M3u8Download:
         cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
             mp4_path, img_path, out_path
         )
+        logger.info(f"cmd:{cmd}")
         sub = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         sub.wait()
 
