@@ -78,7 +78,9 @@ class Pron91Spider:
         videos = soup.find_all(attrs={'class': 'thumb-overlay'})
         for child in videos:
             info = dict()
-            matcher = re.search(r'playvthumb_(\d+)', child.attrs['id'])
+            matcher = re.search(r'playvthumb_(\d+)', child.attrs.get('id'))
+            if not matcher:
+                continue
             info["id"] = matcher.groups()[0]
             url = child.parent.attrs['href']
             for chd in child.children:
