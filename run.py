@@ -47,10 +47,14 @@ def download_91pron(category="hot", month=None, page_num=None):
         for video in pron.video_list:
             _vide_name = "{}.mp4".format(video["id"])
             spider = M3u8Download(info=video)
+            is_exist_path = False
             for _dir in BACK_UP_DIRS:
                 if spider.is_downloaded(_dir, _vide_name):
+                    is_exist_path = _dir
                     continue
-            spider.execute(_vide_name)
+            if not is_exist_path:
+                spider.set_download_path(is_exist_path)
+                spider.execute(_vide_name)
 
 
 if __name__ == '__main__':

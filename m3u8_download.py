@@ -71,7 +71,6 @@ class M3u8Download:
                 if re.match(target_name, f):
                     logger.info("Worming: already download: {}".format(target_name))
                     return True
-        self.set_download_path(download_dir)
         return False
 
     def combine_ts_file(self, target_name):
