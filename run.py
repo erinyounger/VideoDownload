@@ -7,6 +7,8 @@ from log import logger
 
 DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
 
+BACK_UP_DIRS = [r"E:\Windows驱动备份\手杆键盘驱动", r"D:\04_PyCode\best", DOWNLOAD_BASE_DIR]
+
 
 def download_91pron(category="hot", month=None, page_num=None):
     """
@@ -45,8 +47,9 @@ def download_91pron(category="hot", month=None, page_num=None):
         for video in pron.video_list:
             _vide_name = "{}.mp4".format(video["id"])
             spider = M3u8Download(info=video)
-            if spider.is_downloaded(DOWNLOAD_BASE_DIR, _vide_name):
-                continue
+            for _dir in BACK_UP_DIRS:
+                if spider.is_downloaded(_dir, _vide_name):
+                    continue
             spider.execute(_vide_name)
 
 
@@ -57,4 +60,4 @@ if __name__ == '__main__':
     download_91pron(category="rf", page_num=3)
     download_91pron(category="hot", page_num=3)
     download_91pron(category="top", page_num=3)
-    os.system("shutdown -s -t 10")
+    # os.system("shutdown -s -t 10")
