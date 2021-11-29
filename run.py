@@ -1,4 +1,5 @@
 import os
+import time
 from urllib.parse import urlencode
 from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
@@ -47,13 +48,14 @@ def download_91pron(category="hot", month=None, page_num=None):
         for video in pron.video_list:
             _vide_name = "{}.mp4".format(video["id"])
             spider = M3u8Download(info=video)
-            is_exist_path = False
+            is_exist = False
             for _dir in BACK_UP_DIRS:
                 if spider.is_downloaded(_dir, _vide_name):
-                    is_exist_path = _dir
+                    is_exist = True
                     continue
-            if not is_exist_path:
-                spider.set_download_path(is_exist_path)
+            if not is_exist:
+                download_dir = os.path.join(DOWNLOAD_BASE_DIR, time.strftime("%Y%m%d"))
+                spider.set_download_path(download_dir)
                 spider.execute(_vide_name)
 
 

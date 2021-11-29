@@ -1,6 +1,5 @@
 import re
 import os
-import time
 import shutil
 import datetime
 import subprocess
@@ -65,7 +64,6 @@ class M3u8Download:
         d_pool.join()
 
     def is_downloaded(self, base_dir, target_name):
-        download_dir = os.path.join(base_dir, time.strftime("%Y%m%d"))
         for root, ds, fs in os.walk(base_dir):
             for f in fs:
                 if re.match(target_name, f):
