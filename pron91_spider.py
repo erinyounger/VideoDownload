@@ -20,7 +20,7 @@ class Pron91Spider:
         self.tmp_dir = tmp_dir
         self.index_url = index_url
         self.video_list = list()
-        self.base_url = 'https://la.killcovid2021.com'
+        self.base_url = 'http://cdn77.91p49.com'
         self.m3u8_base_url = self.base_url+"/m3u8/{0}/{0}.m3u8"
         self.ts_base_url = self.base_url+"/m3u8/{0}/"
 

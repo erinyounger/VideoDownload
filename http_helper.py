@@ -3,13 +3,17 @@ import time
 import threading
 from log import logger
 
+proxies = {
+    "http": "http://127.0.0.1:41091",
+    "https": "http://127.0.0.1:41091",
+}
 
 def download_file(save_path, url, text=False, retry=10):
     while retry:
         try:
             header = {"Accept-Encoding": "identity"}
             start = time.time()
-            response = requests.get(url, headers=header)
+            response = requests.get(url, headers=header, proxies=proxies)
             end = time.time()
             total_length = float(response.headers.get('Content-length', 1))
             used_time = end - start
