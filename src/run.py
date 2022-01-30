@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 import os
 import time
 from urllib.parse import urlencode
@@ -8,9 +7,10 @@ from pron91_spider import Pron91Spider
 
 from log import logger
 
-DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
+DOWNLOAD_BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "download")
 
-BACK_UP_DIRS = [r"E:\Windows驱动备份\手杆键盘驱动", r"D:\04_PyCode\best", DOWNLOAD_BASE_DIR]
+# DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
+BACK_UP_DIRS = [DOWNLOAD_BASE_DIR]
 
 
 def download_91pron(category="hot", month=None, page_num=None):
