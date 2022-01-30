@@ -9,7 +9,6 @@ from log import logger
 
 DOWNLOAD_BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "download")
 
-# DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
 BACK_UP_DIRS = [DOWNLOAD_BASE_DIR]
 
 
