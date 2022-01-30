@@ -1,10 +1,10 @@
 import os
 import time
 from urllib.parse import urlencode
-from m3u8_download import M3u8Download
-from pron91_spider import Pron91Spider
+from src.m3u8_download import M3u8Download
+from src.pron91_spider import Pron91Spider
 
-from log import logger
+from src.log import logger
 
 DOWNLOAD_BASE_DIR = "D:/04_PyCode/Download"
 

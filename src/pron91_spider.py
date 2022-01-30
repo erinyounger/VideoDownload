@@ -1,10 +1,9 @@
+import os.path
 import re
-import os
+import platform
 import time
-
 import requests
 from bs4 import BeautifulSoup
-import execjs
 from selenium import webdriver
 
 from log import logger
@@ -13,7 +12,6 @@ proxies = {
     "http": "http://127.0.0.1:41091",
     "https": "http://127.0.0.1:41091",
 }
-
 
 class Pron91Spider:
     def __init__(self, index_url, tmp_dir=None):
@@ -32,20 +30,25 @@ class Pron91Spider:
             else:
                 raise Exception("Request [{}] fail.\n{}".format(url, response.content))
         else:
-            driver = webdriver.Chrome()
+            if platform.system() == "Windows":
+                # chrome version: 95
+                chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
+            else:
+                chromedriver = "chromedriver"
+            driver = webdriver.Chrome(executable_path=chromedriver)
             driver.get(url)
             soup_resource = BeautifulSoup(driver.page_source, "lxml")
             driver.close()
             return soup_resource
 
-    def execute_js(self, js_code_str, include_js):
-        os.environ["EXECJS_RUNTIME"] = "phantomjs"
-        if include_js and os.path.exists(include_js):
-            with open(include_js, "r", encoding="utf-8") as f:
-                api_js = f.read()
-            node = execjs.get()
-            ctx = node.compile(api_js)
-            logger.info(ctx.eval(js_code_str.replace(";", "")))
+    # def execute_js(self, js_code_str, include_js):
+    #     os.environ["EXECJS_RUNTIME"] = "phantomjs"
+    #     if include_js and os.path.exists(include_js):
+    #         with open(include_js, "r", encoding="utf-8") as f:
+    #             api_js = f.read()
+    #         node = execjs.get()
+    #         ctx = node.compile(api_js)
+    #         logger.info(ctx.eval(js_code_str.replace(";", "")))
 
     def is_machine(self, url):
         soup = self.request_bs4(url)
