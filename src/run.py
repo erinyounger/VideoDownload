@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import os
 import time
 from urllib.parse import urlencode
