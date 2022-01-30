@@ -45,7 +45,7 @@ def download_91pron(category="hot", month=None, page_num=None):
 
     for url in download_urls:
         pron = Pron91Spider(url, DOWNLOAD_BASE_DIR)
-        logger.info(f"URL: {pron.index_url}")
+        logger.info("URL: {}".format(pron.index_url))
         pron.find_video_info(pron.index_url)
         for video in pron.video_list:
             _vide_name = "{}.mp4".format(video["id"])
