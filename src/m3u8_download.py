@@ -92,7 +92,7 @@ class M3u8Download:
         cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
             mp4_path, img_path, out_path
         )
-        logger.info(f"cmd:{cmd}")
+        logger.info("cmd:{}".format(cmd))
         sub = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         sub.wait()
 
