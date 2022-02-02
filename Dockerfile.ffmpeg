@@ -1,7 +1,7 @@
 FROM markadams/chromium-xvfb-py3:latest
 
 USER root
-ADD ../bin/sources.list /etc/apt/sources.list
+ADD bin/sources.list /etc/apt/sources.list
 
 RUN set -x \
     && apt update &7 apt install -y wget \
