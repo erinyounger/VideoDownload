@@ -1,4 +1,4 @@
-FROM markadams/chromium-xvfb-py3:latest
+FROM elgoog/xvideo-ffmpeg:latest
 
 USER root
 
@@ -16,4 +16,4 @@ ENV https_proxy="http://192.168.3.6:41091"
 
 WORKDIR /home/xvideo
 
-#ENTRYPOINT ["/usr/bin/python3", "src/run.py"]
+ENTRYPOINT ["/usr/bin/python3", "src/run.py"]
