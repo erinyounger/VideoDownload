@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from xvfbwrapper import Xvfb
 
 from http_helper import proxies
 from log import logger
@@ -19,6 +20,7 @@ class Pron91Spider:
         self.base_url = 'http://cdn77.91p49.com'
         self.m3u8_base_url = self.base_url+"/m3u8/{0}/{0}.m3u8"
         self.ts_base_url = self.base_url+"/m3u8/{0}/"
+        self.dispaly = None
 
     def request_bs4(self, url, request=False):
         if request:
@@ -32,6 +34,8 @@ class Pron91Spider:
                 # chrome version: 95
                 chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
             else:
+                self.dispaly = Xvfb(width=1980, height=1280)
+                self.dispaly.start()
                 chromedriver = ChromeDriverManager().install()
             driver = webdriver.Chrome(executable_path=chromedriver)
             driver.get(url)

@@ -58,7 +58,8 @@ def download_91pron(category="hot", month=None, page_num=None):
                 download_dir = os.path.join(DOWNLOAD_BASE_DIR, time.strftime("%Y%m%d"))
                 spider.set_download_path(download_dir)
                 spider.execute(_vide_name)
-
+        if pron.dispaly:
+            pron.dispaly.stop()
 
 if __name__ == '__main__':
     # download video from 91pron

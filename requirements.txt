@@ -3,3 +3,4 @@ bs4==0.0.1
 selenium==3.14.1
 lxml==4.7.1
 webdriver-manager==3.5.2
+xvfbwrapper==0.2.9
