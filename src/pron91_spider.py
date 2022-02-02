@@ -7,7 +7,10 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from xvfbwrapper import Xvfb
+try:
+    from xvfbwrapper import Xvfb
+except:
+    pass
 
 from http_helper import proxies
 from log import logger
@@ -21,6 +24,23 @@ class Pron91Spider:
         self.m3u8_base_url = self.base_url+"/m3u8/{0}/{0}.m3u8"
         self.ts_base_url = self.base_url+"/m3u8/{0}/"
         self.dispaly = None
+        self.driver = None
+        self.init_dirver()
+
+
+    def init_dirver(self):
+        chrom_options = webdriver.ChromeOptions()
+        if platform.system() == "Windows":
+            # chrome version: 95
+            chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
+        else:
+            self.dispaly = Xvfb(width=1980, height=1280)
+            self.dispaly.start()
+            chrom_options.add_argument("--no-sandbox")
+            chrom_options.add_argument("--disable-dev-shm-usage")
+            chrom_options.add_argument("--headless")
+            chromedriver = ChromeDriverManager().install()
+        self.driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
 
     def request_bs4(self, url, request=False):
         if request:
@@ -30,21 +50,21 @@ class Pron91Spider:
             else:
                 raise Exception("Request [{}] fail.\n{}".format(url, response.content))
         else:
-            chrom_options = webdriver.ChromeOptions()
-            if platform.system() == "Windows":
-                # chrome version: 95
-                chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
-            else:
-                self.dispaly = Xvfb(width=1980, height=1280)
-                self.dispaly.start()
-                chrom_options.add_argument("--no-sandbox")
-                chrom_options.add_argument("--disable-dev-shm-usage")
-                chrom_options.add_argument("--headless")
-                chromedriver = ChromeDriverManager().install()
-            driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
-            driver.get(url)
-            soup_resource = BeautifulSoup(driver.page_source, "lxml")
-            driver.close()
+            # chrom_options = webdriver.ChromeOptions()
+            # if platform.system() == "Windows":
+            #     # chrome version: 95
+            #     chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
+            # else:
+            #     self.dispaly = Xvfb(width=1980, height=1280)
+            #     self.dispaly.start()
+            #     chrom_options.add_argument("--no-sandbox")
+            #     chrom_options.add_argument("--disable-dev-shm-usage")
+            #     chrom_options.add_argument("--headless")
+            #     chromedriver = ChromeDriverManager().install()
+            # driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
+            self.driver.get(url)
+            soup_resource = BeautifulSoup(self.driver.page_source, "lxml")
+            # self.driver.close()
             return soup_resource
 
     # def execute_js(self, js_code_str, include_js):
@@ -61,13 +81,13 @@ class Pron91Spider:
         fonts = soup.find_all("font")
         res = list(map(lambda text: re.search("请点击以下链接访问，以验证你不是机器人！", str(text)), fonts))
         if any(res):
-            driver = webdriver.Chrome()
-            driver.get(url)
-            check_button = driver.find_element_by_tag_name('a')
+            # driver = webdriver.Chrome()
+            self.driver.get(url)
+            check_button = self.driver.find_element_by_tag_name('a')
             check_button.click()
             time.sleep(5)
-            soup_resource = BeautifulSoup(driver.page_source, "lxml")
-            driver.close()
+            soup_resource = BeautifulSoup(self.driver.page_source, "lxml")
+            # self.driver.close()
             # cgi_api = "https://www.91porn.com/" + soup.script.attrs["src"]
             # response = requests.get(cgi_api, proxies=proxies)
             # f_cgi_api = os.path.join(self.tmp_dir, "cgi_api.js")

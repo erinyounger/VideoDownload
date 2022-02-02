@@ -60,6 +60,7 @@ def download_91pron(category="hot", month=None, page_num=None):
                 spider.execute(_vide_name)
         if pron.dispaly:
             pron.dispaly.stop()
+        pron.driver.close()
 
 if __name__ == '__main__':
     # download video from 91pron
