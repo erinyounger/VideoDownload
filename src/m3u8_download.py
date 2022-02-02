@@ -22,11 +22,11 @@ class M3u8Download:
         self.img_path = None
         self.video_id = info.get("id")
         self.download_path = os.path.join(self.base_dir, "var")
-        self.template_dir = os.path.join(self.download_path, "template", self.now_str)
+        self.template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template", self.now_str)
 
     def set_download_path(self, path):
         self.download_path = path
-        self.template_dir = os.path.join(self.download_path, "template", self.now_str)
+        self.template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template", self.now_str)
 
     @property
     def now_str(self):
@@ -89,7 +89,7 @@ class M3u8Download:
         logger.info("Combined TS file TO [{}]".format(target_path))
 
     def attach_img(self, mp4_path, img_path, out_path):
-        cmd = "ffmpeg -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
+        cmd = "ffmpeg -i {0} -i {1} -map 1 -map 0 -c copy -disposition:v:1 attached_pic {2}".format(
             mp4_path, img_path, out_path
         )
         logger.info("cmd:{}".format(cmd))
