@@ -16,3 +16,4 @@ RUN set -x \
 
 
 WORKDIR /home/xvideo
+ENTRYPOINT ["python3 src/run.py"]
