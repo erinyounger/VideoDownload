@@ -12,9 +12,9 @@ RUN set -x \
     && apt update && apt -y install python3-pip \
     && cd /home/xvideo/ && pip3 install -r ./requirements.txt --index-url=https://mirrors.aliyun.com/pypi/simple/
 
-ENV http_proxy="http://127.0.0.1:41091"
-ENV https_proxy="http://127.0.0.1:41091"
+#ENV http_proxy="http://127.0.0.1:41091"
+#ENV https_proxy="http://127.0.0.1:41091"
 
 WORKDIR /home/xvideo
 
-ENTRYPOINT ["/usr/bin/python3", "src/run.py"]
+#ENTRYPOINT ["/usr/bin/python3", "src/run.py"]
