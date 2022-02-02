@@ -37,8 +37,8 @@ class Pron91Spider:
             self.dispaly = Xvfb(width=1980, height=1280)
             self.dispaly.start()
             chrom_options.add_argument("--no-sandbox")
-            chrom_options.add_argument("--disable-dev-shm-usage")
-            chrom_options.add_argument("--headless")
+            # chrom_options.add_argument("--disable-dev-shm-usage")
+            # chrom_options.add_argument("--headless")
             chromedriver = ChromeDriverManager().install()
         self.driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
 
@@ -64,6 +64,7 @@ class Pron91Spider:
             # driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
             self.driver.get(url)
             soup_resource = BeautifulSoup(self.driver.page_source, "lxml")
+            logger.info("soup_resource: {}".format(soup_resource))
             # self.driver.close()
             return soup_resource
 
@@ -79,6 +80,7 @@ class Pron91Spider:
     def is_machine(self, url):
         soup = self.request_bs4(url)
         fonts = soup.find_all("font")
+        logger.info("fonts:{}".format(fonts))
         res = list(map(lambda text: re.search("请点击以下链接访问，以验证你不是机器人！", str(text)), fonts))
         if any(res):
             # driver = webdriver.Chrome()
@@ -112,6 +114,7 @@ class Pron91Spider:
             if not matcher:
                 continue
             info["id"] = matcher.groups()[0]
+            logger.info("find video ID: {}".format(info["id"]))
             url = child.parent.attrs['href']
             for chd in child.children:
                 if isinstance(chd, str):

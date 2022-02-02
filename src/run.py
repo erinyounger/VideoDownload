@@ -58,6 +58,8 @@ def download_91pron(category="hot", month=None, page_num=None):
                 download_dir = os.path.join(DOWNLOAD_BASE_DIR, time.strftime("%Y%m%d"))
                 spider.set_download_path(download_dir)
                 spider.execute(_vide_name)
+        else:
+            logger.error("No Video info: {}".format(pron.video_list))
         if pron.dispaly:
             pron.dispaly.stop()
         pron.driver.close()
