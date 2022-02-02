@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
 import time
+import traceback
 from urllib.parse import urlencode
 from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
@@ -60,9 +61,12 @@ def download_91pron(category="hot", month=None, page_num=None):
                 spider.execute(_vide_name)
         else:
             logger.error("No Video info: {}".format(pron.video_list))
-        if pron.dispaly:
-            pron.dispaly.stop()
-        pron.driver.close()
+        try:
+            if pron.dispaly:
+                pron.dispaly.stop()
+            pron.driver.close()
+        except Exception as ex:
+            logger.error("Close webdriver fail.\n{}".format(traceback.format_exc()))
 
 if __name__ == '__main__':
     # download video from 91pron

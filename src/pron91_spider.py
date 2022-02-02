@@ -27,7 +27,6 @@ class Pron91Spider:
         self.driver = None
         self.init_dirver()
 
-
     def init_dirver(self):
         chrom_options = webdriver.ChromeOptions()
         if platform.system() == "Windows":
@@ -37,8 +36,6 @@ class Pron91Spider:
             self.dispaly = Xvfb(width=1980, height=1280)
             self.dispaly.start()
             chrom_options.add_argument("--no-sandbox")
-            # chrom_options.add_argument("--disable-dev-shm-usage")
-            # chrom_options.add_argument("--headless")
             chromedriver = ChromeDriverManager().install()
         self.driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
 
@@ -68,19 +65,9 @@ class Pron91Spider:
             # self.driver.close()
             return soup_resource
 
-    # def execute_js(self, js_code_str, include_js):
-    #     os.environ["EXECJS_RUNTIME"] = "phantomjs"
-    #     if include_js and os.path.exists(include_js):
-    #         with open(include_js, "r", encoding="utf-8") as f:
-    #             api_js = f.read()
-    #         node = execjs.get()
-    #         ctx = node.compile(api_js)
-    #         logger.info(ctx.eval(js_code_str.replace(";", "")))
-
     def is_machine(self, url):
         soup = self.request_bs4(url)
         fonts = soup.find_all("font")
-        logger.info("fonts:{}".format(fonts))
         res = list(map(lambda text: re.search("请点击以下链接访问，以验证你不是机器人！", str(text)), fonts))
         if any(res):
             # driver = webdriver.Chrome()
@@ -89,14 +76,6 @@ class Pron91Spider:
             check_button.click()
             time.sleep(5)
             soup_resource = BeautifulSoup(self.driver.page_source, "lxml")
-            # self.driver.close()
-            # cgi_api = "https://www.91porn.com/" + soup.script.attrs["src"]
-            # response = requests.get(cgi_api, proxies=proxies)
-            # f_cgi_api = os.path.join(self.tmp_dir, "cgi_api.js")
-            # with open(f_cgi_api, "wb") as f:
-            #     f.write(response.content)
-            # js_code_str = str(soup.find_all("script")[1].contents[0])
-            # self.execute_js(js_code_str, f_cgi_api)
             return soup_resource
         else:
             return soup
