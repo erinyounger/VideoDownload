@@ -7,12 +7,8 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
+from http_helper import proxies
 from log import logger
-
-proxies = {
-    "http": "http://127.0.0.1:41091",
-    "https": "http://127.0.0.1:41091",
-}
 
 class Pron91Spider:
     def __init__(self, index_url, tmp_dir=None):
