@@ -47,21 +47,9 @@ class Pron91Spider:
             else:
                 raise Exception("Request [{}] fail.\n{}".format(url, response.content))
         else:
-            # chrom_options = webdriver.ChromeOptions()
-            # if platform.system() == "Windows":
-            #     # chrome version: 95
-            #     chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
-            # else:
-            #     self.dispaly = Xvfb(width=1980, height=1280)
-            #     self.dispaly.start()
-            #     chrom_options.add_argument("--no-sandbox")
-            #     chrom_options.add_argument("--disable-dev-shm-usage")
-            #     chrom_options.add_argument("--headless")
-            #     chromedriver = ChromeDriverManager().install()
-            # driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
             self.driver.get(url)
             soup_resource = BeautifulSoup(self.driver.page_source, "lxml")
-            logger.info("soup_resource: {}".format(soup_resource))
+            # logger.info("soup_resource: {}".format(soup_resource))
             # self.driver.close()
             return soup_resource
 
@@ -82,10 +70,6 @@ class Pron91Spider:
 
     def find_video_info(self, url):
         soup = self.is_machine(url)
-        # if check_machine is True:
-        #     soup = self.request_bs4(url)
-        # else:
-        #     soup = check_machine
         videos = soup.find_all(attrs={'class': 'thumb-overlay'})
         for child in videos:
             info = dict()
