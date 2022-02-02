@@ -104,7 +104,7 @@ class M3u8Download:
         self.parse_m3u8()
         self.download_ts_file()
         self.combine_ts_file(target_name)
-        self.clear()
+        # self.clear()
 
     def clear(self):
         shutil.rmtree(self.template_dir)
