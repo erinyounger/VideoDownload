@@ -1,6 +1,6 @@
 docker build -t elgoog/xvideo .
 
-docker build -t elgoog/xvideo-ffmpeg -f Dockerfile_ffmpeg .
+docker build -t elgoog/xvideo-ffmpeg -f Dockerfile.ffmpeg .
 
 docker run --rm --name=xvideo -v /mnt/xvideo:/home/xvideo/download -it elgoog/xvideo
 
