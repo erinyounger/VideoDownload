@@ -1,5 +1,6 @@
 FROM elgoog/xvideo-ffmpeg:latest
 
+ENV TZ="Asia/Shanghai"
 USER root
 
 RUN mkdir -p /home/xvideo/download
