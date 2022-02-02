@@ -9,7 +9,7 @@ COPY . /home/xvideo/
 ADD bin/sources.list /etc/apt/sources.list
 
 RUN set -x \
-#    && apt update && apt -y install ffmpeg \
+    && apt update && apt -y install python3-pip \
     && cd /home/xvideo/ && pip3 install -r ./requirements.txt --index-url=https://mirrors.aliyun.com/pypi/simple/
 
 ENV http_proxy="http://127.0.0.1:41091"
