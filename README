@@ -2,7 +2,7 @@ docker build -t elgoog/xvideo .
 
 docker build -t elgoog/xvideo-ffmpeg -f Dockerfile.ffmpeg .
 
-docker run --rm --name=xvideo -p 6080:80 -v /mnt/xvideo:/home/xvideo/download -it elgoog/xvideo /bin/bash
+docker run --rm --name=xvideo -p 6080:80 --privileged --cap-add=SYS_ADMIN --device=/dev/fuse -v /dev/shm:/dev/shm -v /etc/localtime:/etc/localtime -v /home/share/video:/home/xvideo/download -it elgoog/xvideo /bin/bash
 
 export http_proxy="http://192.168.3.6:41091"
 export https_proxy="http://192.168.3.6:41091"
