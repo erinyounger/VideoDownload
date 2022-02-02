@@ -77,5 +77,5 @@ if __name__ == '__main__':
         download_91pron(category="rf", page_num=page_num)
         download_91pron(category="hot", page_num=page_num)
         download_91pron(category="top", page_num=page_num)
-        time.sleep(43200)
+        time.sleep(28800)
     # os.system("shutdown -s -t 10")
