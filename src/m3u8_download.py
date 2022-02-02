@@ -89,7 +89,7 @@ class M3u8Download:
         logger.info("Combined TS file TO [{}]".format(target_path))
 
     def attach_img(self, mp4_path, img_path, out_path):
-        cmd = "D:/04_PyCode/tools_bin/ffmpeg.exe -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
+        cmd = "ffmpeg -i {0} -i {1} -map 1 -map 0 -c copy -disposition:0 attached_pic {2}".format(
             mp4_path, img_path, out_path
         )
         logger.info("cmd:{}".format(cmd))
