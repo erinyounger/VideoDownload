@@ -5,7 +5,7 @@ USER root
 RUN mkdir /home/xvideo/
 
 COPY . /home/xvideo/
-ADD bin/sources.list /etc/apt/sources.list
+#ADD bin/sources.list /etc/apt/sources.list
 
 RUN set -x \
     && apt install ffmpeg \
