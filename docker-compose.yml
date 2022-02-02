@@ -1,0 +1,11 @@
+version: "3"
+services:
+  jellyfin:
+    image: elgoog/xvideo-ffmpeg
+    container_name: xvideo
+    ports:
+      - 9080:80
+    volumes:
+      - /home/share/video:/home/xvideo/download
+      - /etc/localtime:/etc/localtime
+    restart: unless-stopped

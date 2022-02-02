@@ -63,9 +63,11 @@ def download_91pron(category="hot", month=None, page_num=None):
 if __name__ == '__main__':
     # download video from 91pron
     page_num = 10
-    download_91pron(category="index")
-    download_91pron(category="ori", page_num=page_num)
-    download_91pron(category="rf", page_num=page_num)
-    download_91pron(category="hot", page_num=page_num)
-    download_91pron(category="top", page_num=page_num)
+    while True:
+        download_91pron(category="index")
+        download_91pron(category="ori", page_num=page_num)
+        download_91pron(category="rf", page_num=page_num)
+        download_91pron(category="hot", page_num=page_num)
+        download_91pron(category="top", page_num=page_num)
+        time.sleep(43200)
     # os.system("shutdown -s -t 10")
