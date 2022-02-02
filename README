@@ -1,6 +1,6 @@
 docker build -t elgoog/xvideo .
 
-docker run --rm -it elgoog/xvideo /bin/bash
+docker run --rm --name=xvideo -v /mnt/xvideo:/home/xvideo/download -it elgoog/xvideo /bin/bash
 
 
 export http_proxy="http://192.168.3.6:41091"

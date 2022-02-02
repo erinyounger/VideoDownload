@@ -2,7 +2,7 @@ FROM markadams/chromium-xvfb-py3:latest
 
 USER root
 
-RUN mkdir /home/xvideo/
+RUN mkdir -p /home/xvideo/download
 
 COPY . /home/xvideo/
 ADD bin/sources.list /etc/apt/sources.list

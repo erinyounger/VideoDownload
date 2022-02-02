@@ -25,8 +25,11 @@ class M3u8Download:
         self.template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template", self.now_str)
 
     def set_download_path(self, path):
-        self.download_path = path
+        if not os.path.exists(self.download_path):
+            os.makedirs(self.download_path)
         self.template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "template", self.now_str)
+        if not os.path.exists(self.template_dir):
+            os.makedirs(self.template_dir)
 
     @property
     def now_str(self):
