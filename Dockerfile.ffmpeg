@@ -4,7 +4,7 @@ USER root
 ADD bin/sources.list /etc/apt/sources.list
 
 RUN set -x \
-    && apt update && apt -y install wget \
+    && apt update && apt -y install wget gcc automake autoconf libtool make \
     && wget http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz \
     && tar xvf yasm-1.3.0.tar.gz && cd yasm-1.3.0 && ./configure && make && make install && cd .. && rm -rf yasm* \
     && wget https://ffmpeg.org/releases/ffmpeg-4.2.3.tar.bz2 --no-check-certificate -e "https_proxy=http://192.168.3.6:41091" \
