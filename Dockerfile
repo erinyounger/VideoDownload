@@ -14,6 +14,6 @@ RUN set -x \
     && apt update && apt -y install ffmpeg \
     && cd /home/xvideo/ && pip3 install -r ./requirements.txt --index-url=https://mirrors.aliyun.com/pypi/simple/
 
-
 WORKDIR /home/xvideo
-ENTRYPOINT ["python3 src/run.py"]
+
+#ENTRYPOINT ["python3", "src/run.py"]
