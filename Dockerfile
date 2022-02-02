@@ -12,8 +12,8 @@ RUN set -x \
 #    && apt update && apt -y install ffmpeg \
     && cd /home/xvideo/ && pip3 install -r ./requirements.txt --index-url=https://mirrors.aliyun.com/pypi/simple/
 
-#ENV http_proxy="http://192.168.3.6:41091"
-#ENV https_proxy="http://192.168.3.6:41091"
+ENV http_proxy="http://127.0.0.1:41091"
+ENV https_proxy="http://127.0.0.1:41091"
 
 WORKDIR /home/xvideo
 

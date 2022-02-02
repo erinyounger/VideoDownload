@@ -5,8 +5,8 @@ import threading
 from log import logger
 
 proxies = {
-    "http": "http://192.168.3.6:41091",
-    "https": "http://192.168.3.6:41091",
+    "http": "http://127.0.0.1:41091",
+    "https": "http://127.0.0.1:41091",
 }
 
 def download_file(save_path, url, text=False, retry=10):
