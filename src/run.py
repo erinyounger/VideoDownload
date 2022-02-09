@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import os
 import time
+import traceback
 from urllib.parse import urlencode
 from m3u8_download import M3u8Download
 from pron91_spider import Pron91Spider
@@ -78,6 +79,8 @@ if __name__ == '__main__':
             download_91pron(category="rf", page_num=page_num)
             download_91pron(category="hot", page_num=page_num)
             download_91pron(category="top", page_num=page_num)
+        except Exception as ex:
+            logger.error("download fail.\n{}".format(traceback.format_exc()))
         finally:
             logger.info("Sleep Wait Next Download.")
             time.sleep(3600)
