@@ -6,6 +6,6 @@ services:
     ports:
       - 9080:80
     volumes:
-      - /home/share/video:/home/xvideo/download
+      - /home/share/sdb/pornhub:/home/xvideo/download
       - /etc/localtime:/etc/localtime
     restart: unless-stopped
