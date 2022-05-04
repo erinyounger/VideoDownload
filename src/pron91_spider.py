@@ -36,9 +36,9 @@ class Pron91Spider:
             self.dispaly = Xvfb(width=1980, height=1280)
             self.dispaly.start()
             chrom_options.add_argument("--no-sandbox")
-            chromedriver = ChromeDriverManager(url="https://npm.taobao.org/mirrors/chromedriver/",
-                                               latest_release_url="https://registry.npmmirror.com/-/binary/chromedriver/LATEST_RELEASE").install()
-        self.driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
+            # chromedriver = ChromeDriverManager(url="https://npm.taobao.org/mirrors/chromedriver/",
+            #                                    latest_release_url="https://registry.npmmirror.com/-/binary/chromedriver/LATEST_RELEASE").install()
+        self.driver = webdriver.Chrome(executable_path="/usr/bin/", chrome_options=chrom_options)
 
     def request_bs4(self, url, request=False):
         if request:

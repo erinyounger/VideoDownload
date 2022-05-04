@@ -11,3 +11,9 @@ export https_proxy="http://192.168.3.6:41091"
 
 
 nohup /usr/bin/python3 /home/xvideo/src/run.py > python.log3 2>&1 &
+
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}
+
+systemctl restart docker
