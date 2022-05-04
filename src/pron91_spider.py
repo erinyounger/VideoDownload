@@ -31,14 +31,15 @@ class Pron91Spider:
         chrom_options = webdriver.ChromeOptions()
         if platform.system() == "Windows":
             # chrome version: 95
-            chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver.exe')
+            chromedriver = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'bin', 'chromedriver-100.0.4896.60.exe')
         else:
             self.dispaly = Xvfb(width=1980, height=1280)
             self.dispaly.start()
             chrom_options.add_argument("--no-sandbox")
             # chromedriver = ChromeDriverManager(url="https://npm.taobao.org/mirrors/chromedriver/",
             #                                    latest_release_url="https://registry.npmmirror.com/-/binary/chromedriver/LATEST_RELEASE").install()
-        self.driver = webdriver.Chrome(executable_path="/usr/bin/", chrome_options=chrom_options)
+            chromedriver = "/usr/bin/chromedriver"
+        self.driver = webdriver.Chrome(executable_path=chromedriver, chrome_options=chrom_options)
 
     def request_bs4(self, url, request=False):
         if request:

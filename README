@@ -16,4 +16,5 @@ nohup /usr/bin/python3 /home/xvideo/src/run.py > python.log3 2>&1 &
   "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }
 
+systemctl daemon-reload
 systemctl restart docker
